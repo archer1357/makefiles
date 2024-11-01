@@ -1,0 +1,27 @@
+<project name="myproject" default="main" basedir=".">
+    <property value="src" name="src.dir" />
+    <property value="build" name="build.dir" />
+    <property value="${build.dir}/classes" name="classes.dir" />
+    <property value="${build.dir}/jar" name="jar.dir" />
+    <property value="helloworld" name="main-class" />
+    <target name="clean">
+        <delete dir="${build.dir}" />
+    </target>
+    <target name="compile">
+        <mkdir dir="${classes.dir}" />
+        <javac srcdir="${src.dir}" includeantruntime="false" destdir="${classes.dir}" />
+    </target>
+    <target name="jar" depends="compile">
+        <mkdir dir="${jar.dir}" />
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute value="${main-class}" name="Main-Class" />
+            </manifest>
+        </jar>
+    </target>
+    <target name="run" depends="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true" />
+    </target>
+    <target name="clean-build" depends="clean,jar" />
+    <target name="main" depends="clean,run" />
+</project>
