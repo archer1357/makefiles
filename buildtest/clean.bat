@@ -1,0 +1,1 @@
+msbuild myproject.vcxproj /t:clean /p:configuration=release /p:platform=x64
